@@ -1,0 +1,24 @@
+{
+  "name": "cupfake",
+  "version": "1.0.0",
+  "description": "try to develop a cuphead level",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "videogame",
+    "javascript",
+    "html",
+    "canvas"
+  ],
+  "author": "JossDz",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/preset-env": "^7.1.6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.6",
+    "cssnano": "^4.1.7"
+  }
+}

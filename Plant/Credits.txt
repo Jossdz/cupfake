@@ -1,0 +1,3 @@
+Cagney Carnation from Cuphead ripped by Mighty Jetters. Credit is not required.
+
+It was surpringly a lot of work to dissassemble the Unity asset sheets and sort the graphics. Some graphics may not be correct or ordered properly, I did the best I could to figure out what went where and what sprites went with which effects etc. with what references I had available. Use as you like and enjoy. A mention as the ripper would be nice, and don't claim as your own rip. Everything here belongs to MDHR Studios.
