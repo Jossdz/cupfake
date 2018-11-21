@@ -15,7 +15,8 @@
   "author": "JossDz",
   "license": "MIT",
   "dependencies": {
-    "@babel/preset-env": "^7.1.6"
+    "@babel/preset-env": "^7.1.6",
+    "redux": "^4.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.1.6",
