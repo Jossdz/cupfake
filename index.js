@@ -4,13 +4,22 @@ import Cuphead from './cuphead'
 import Bullet from './bullet'
 import Carnation from './Carnation'
 
+
+
+  
+
+
 window.onload = () => {
-  const canvas = document.getElementById('canvas')
-  const ctx = canvas.getContext('2d')
+  var canvas = document.getElementById('canvas')
+  var ctx = canvas.getContext('2d')
 
   let intervalo
   let frames = 0
+  let keys = []
   let shoots = []
+  var friction = 0.8;
+  var gravity = 0.98;
+  
 
 
   const board = new Board(ctx)
@@ -24,8 +33,7 @@ window.onload = () => {
   function checkCollition (){
     platforms.forEach(platform => {
       if(cuphead.isTouching(platform)){
-        cuphead.y=platform.y-cuphead.height;
-        cuphead.setOriginalSize()
+        cuphead.y= platform.y-cuphead.height +20;
         cuphead.grounded = true
       }
     });
@@ -51,6 +59,12 @@ window.onload = () => {
     cuphead.draw(frames)
     carnation.draw(frames)
     drawShoots()
+    checkKeys()
+
+    cuphead.x += cuphead.velX;
+    cuphead.y += cuphead.velY;
+    cuphead.velX *= friction;
+    cuphead.velY += gravity;
   }
   
   function stop(){
@@ -59,7 +73,6 @@ window.onload = () => {
   }
   
   function startGame() {
-    console.log('start')
     if(intervalo > 0) return
   
     intervalo = setInterval(function() {
@@ -67,45 +80,79 @@ window.onload = () => {
     },1000/60)
   }
 
-  addEventListener('keypress', e => {
-    switch (e.keyCode) {
-      case 97:
-        cuphead.changeStatus('RUN_L')
-        return cuphead.left()
-      case 100:
-        cuphead.changeStatus('RUN_R')
-        return cuphead.right()
-      case 119:
-        cuphead.jumping = true
-        cuphead.changeStatus('JUMP')
-        return cuphead.jump()
-      case 101 && 100:
-        cuphead.changeStatus('RUN_R')
-        shoot(cuphead.x + cuphead.width - 30, cuphead.y + 10)
-        return cuphead.right()
-      case 101:
-        return shoot(cuphead.x + cuphead.width - 30, cuphead.y + 50)
-      default:
-        cuphead.changeStatus()
+function checkKeys(){
+  if(keys[38] || keys[32]){
+    if(cuphead.grounded){
+      cuphead.velY = -cuphead.jumpStrength*2;
+      cuphead.jumping = true;
     }
-  })
+	}
 
-  addEventListener('keydown', function (e) {
-    switch(e.keyCode){
-      case 13:
-        return startGame()
-      case 16:
-        return stop()
-      
-      default:
-      console.log('keydown', e.keyCode)
+	if(keys[39]){
+		if(cuphead.velX < cuphead.vel){
+      if(cuphead.grounded){
+        cuphead.changeStatus('RUN_R')
+      }
+			cuphead.velX++;
+		}
+	}
+
+	if(keys[37]){
+		if(cuphead.velX > -cuphead.vel){
+      if(cuphead.grounded){
+        cuphead.changeStatus('RUN_L')
+      }
+			cuphead.velX--;
+		}
+  }
+  if(keys[69]){
+    if(frames%5==0){
+      return shoot(cuphead.x + cuphead.width - 30, cuphead.y + 50)
     }
-  })
+  }
+  }
+
+  // addEventListener('keypress', e => {
+  //   switch (e.keyCode) {
+  //     case 97:
+  //       cuphead.changeStatus('RUN_L')
+  //       return cuphead.left()
+  //     case 100:
+  //       cuphead.changeStatus('RUN_R')
+  //       return cuphead.right()
+  //     case 119:
+  //       cuphead.jumping = true
+  //       cuphead.changeStatus('JUMP')
+  //       return cuphead.jump()
+  //     case 101 && 100:
+  //       cuphead.changeStatus('RUN_R')
+  //       shoot(cuphead.x + cuphead.width - 30, cuphead.y + 10)
+  //       return cuphead.right()
+  //     case 101:
+  //       return shoot(cuphead.x + cuphead.width - 30, cuphead.y + 50)
+  //     default:
+  //       cuphead.changeStatus()
+  //   }
+  // })
+
+  
+ addEventListener("keydown", function(event){
+    if(event.keyCode == 13){
+      startGame();
+    }else if(event.keyCode == 16){
+      stop()
+    }
+    keys[event.keyCode] = true;
+  });
+
+  
+ addEventListener("keyup", function(event){
+    keys[event.keyCode] = false;
+  });
 
   addEventListener('keyup', e => {
     switch (e.keyCode) {
       default:
-        cuphead.changeStatus()
         cuphead.jumping = false
     }
   })

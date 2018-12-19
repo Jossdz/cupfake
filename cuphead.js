@@ -30,17 +30,17 @@ class Cuphead {
   constructor(ctx){
     this.x = 10
     this.y = 400
-    this.speed = 5
-    this.speedY = 1
-    this.speedX= 1
+    this.vel = 6
+    this.velY = 0.5
+    this.velX= 0.5
+    this.jumping = false,
+	  this.grounded = false,
+	  this.jumpStrength = 12,
     this.friction  = 0.98
     this.width = 120
     this.height = 150
     this.status = 'STRAIGHT'
     this.animateHelper = 1
-    this.jumping = false
-    this.jumpStrength=7
-    this.grounded =  true
     // Imagenes
     this.img = new Image
     this.img.src = c1
@@ -88,11 +88,16 @@ class Cuphead {
     this.j4.src = j4
     this.j5 = new Image()
     this.j5.src = j5
-    this.j6 = new Image()
-    this.j6.src = j6
     
     
     this.draw = frames => {
+      if(this.y > 600 - this.height) {
+        this.y = 600 - this.height
+        this.grounded = true
+      }else if(this.jumping){
+        this.grounded = false
+        this.changeStatus('JUMP')
+      }
       if(frames % 6 === 0){
         if(this.animateHelper >= 5){
           this.animateHelper = 0
@@ -108,67 +113,68 @@ class Cuphead {
                                                 this.img5
       }
       else if (this.status === 'RUN_L'){
+        this.setOriginalSize()
         this.img =  this.animateHelper === 1 ?  this.runl1 :
                     this.animateHelper === 2 ?  this.runl2 :
                     this.animateHelper === 3 ?  this.runl3 :
                     this.animateHelper === 4 ?  this.runl4 : 
                                                 this.runl5
+        this.changeStatus()
       }
       else if (this.status === 'RUN_R'){
+        this.setOriginalSize()
         this.img =  this.animateHelper === 1 ?  this.run1 :
                     this.animateHelper === 2 ?  this.run2 :
                     this.animateHelper === 3 ?  this.run3 :
                     this.animateHelper === 4 ?  this.run4 : 
                                                 this.run5
+                                                this.changeStatus()
       }
       else if (this.status === 'JUMP'){
+        this.width = 90
+        this.height = 90
         this.img =  this.animateHelper === 1 ?  this.j1 :
                     this.animateHelper === 2 ?  this.j2 :
                     this.animateHelper === 3 ?  this.j3 :
                     this.animateHelper === 4 ?  this.j4 : 
                                                 this.j5
-      }
-      if(this.jumping){
-        this.y -=40
-      }
-      else if( this.y < 400 ) {
-        this.y += 8
-        this.grounded = true
-      } else {
-        this.setOriginalSize()
-      }
-      this.speedY *= this.friction
-      this.y += this.speedY
-      this.speedX *= this.friction
-      this.x +=  this.speedX
-      if(this.y < 0) this.y = 0
-      if (!this.grounded) this.changeStatus('JUMP')
+        }
       ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
-    }    
-    this.left = () => {
-      if (this.speedX > - this.speed){
-        this.speedX--
-      }
     }
-    this.right = () => {
-      if (this.speedX < this.speed){
-        this.speedX++
-      }
-    }
-    this.jump = () => {
-      if (this.speedY > this.speed) {
-        this.speedY--
-      }
-        this.width = 90
-        this.height = 120      
-    }
+      
+    //   
+      
+    //   this.speedY *= this.friction
+    //   this.y += this.speedY
+    //   this.speedX *= this.friction
+    //   this.x +=  this.speedX
+    //   if(this.y < 0) this.y = 0
+    //   ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
+    // }    
+    // this.left = () => {
+    //   if (this.speedX > - this.speed){
+    //     this.speedX--
+    //   }
+    // }
+    // this.right = () => {
+    //   if (this.speedX < this.speed){
+    //     this.speedX++
+    //   }
+    // }
+    // this.jump = () => {
+    //   if (this.speedY > this.speed) {
+    //     this.speedY--
+    //   }
+    //     this.width = 90
+    //     this.height = 120      
+    // }
     this.setOriginalSize = () => {
       this.width = 120
       this.height = 150
     }
-    this.changeStatus = (status = 'STRAIGHT') => {
-      this.status = status
-    }
+     this.changeStatus = (status = 'STRAIGHT') => {
+       this.status = status
+     }
     this.isTouching = function(platform){
       return (this.x < platform.x + platform.width)&&
              (this.x + this.width - 25 > platform.x + 30)&&

@@ -65,13 +65,6 @@ class Platforms{
       ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
       ctx.drawImage(this.shadow, this.x + (this.width/5), this.y + 180, 100, 20) 
     }
-
-    this.up = () => {
-      this.y -= 2
-    }
-    this.down = () => {
-      this.y+= 2
-    }
   }
 }
 export default Platforms
