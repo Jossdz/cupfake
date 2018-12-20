@@ -35,7 +35,7 @@ class Cuphead {
     this.velX= 0.5
     this.jumping = false,
 	  this.grounded = false,
-	  this.jumpStrength = 12,
+    this.jumpStrength = 10,
     this.friction  = 0.98
     this.width = 120
     this.height = 150
@@ -106,6 +106,7 @@ class Cuphead {
         }
       }
       if (this.status === 'STRAIGHT'){
+        this.setOriginalSize()
         this.img =  this.animateHelper === 1 ?  this.img1 :
                     this.animateHelper === 2 ?  this.img2 :
                     this.animateHelper === 3 ?  this.img3 :
@@ -141,33 +142,6 @@ class Cuphead {
         }
       ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
     }
-      
-    //   
-      
-    //   this.speedY *= this.friction
-    //   this.y += this.speedY
-    //   this.speedX *= this.friction
-    //   this.x +=  this.speedX
-    //   if(this.y < 0) this.y = 0
-    //   ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
-    // }    
-    // this.left = () => {
-    //   if (this.speedX > - this.speed){
-    //     this.speedX--
-    //   }
-    // }
-    // this.right = () => {
-    //   if (this.speedX < this.speed){
-    //     this.speedX++
-    //   }
-    // }
-    // this.jump = () => {
-    //   if (this.speedY > this.speed) {
-    //     this.speedY--
-    //   }
-    //     this.width = 90
-    //     this.height = 120      
-    // }
     this.setOriginalSize = () => {
       this.width = 120
       this.height = 150

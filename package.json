@@ -4,6 +4,7 @@
   "description": "try to develop a cuphead level",
   "main": "index.js",
   "scripts": {
+    "start": "parcel index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -15,11 +16,12 @@
   "author": "JossDz",
   "license": "MIT",
   "dependencies": {
-    "@babel/preset-env": "^7.1.6",
+    "@babel/preset-env": "^7.2.0",
+    "parcel": "^1.11.0",
     "redux": "^4.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.6",
+    "@babel/core": "^7.0.0-0",
     "cssnano": "^4.1.7"
   }
 }
