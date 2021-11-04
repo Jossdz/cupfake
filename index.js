@@ -4,7 +4,7 @@ import Cuphead from './cuphead'
 import Bullet from './bullet'
 import Carnation from './Carnation'
 import Seed from './Seed'
-import audio from './07 Botanic Panic.mp3'
+
 
 
   
@@ -32,7 +32,7 @@ window.onload = () => {
   const carnation = new Carnation(ctx)
   const seeds = []
 
-  sound.src = audio
+
 
 
   function checkCollition (){
